@@ -1,15 +1,15 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import MainPage from "./layouts/mainPage";
-import CreatePage from "./layouts/createPage";
+import ChangeFormPage from "./layouts/changeFormPage";
 
 function App() {
   return (
     <Switch>
       <Route path = "/" exact component={MainPage}/>
-      <Route path = "/:type?" component={CreatePage}/>
-      {/* <Redirect from = "../users/" to = "/loading"/> */}
+      <Route path = "/:type?" component={ChangeFormPage}/>
+      {/* <Redirect from = "../:type?/" to = "/"/> */}
     </Switch>
   );
 }
