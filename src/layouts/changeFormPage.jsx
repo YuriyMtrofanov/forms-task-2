@@ -1,14 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import CreateUserPage from "../components/page/createUserPage";
 import UserEditPage from "../components/page/userEditPage"
 
 const ChangeFormPage = () => {
     const { type } = useParams();
-    useEffect(() => {
-        console.log(type);
-    }, []);
-
     return (
         <div className="container mt-5">
             <div className="row">

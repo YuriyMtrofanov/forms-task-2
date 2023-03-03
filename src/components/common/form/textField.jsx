@@ -6,7 +6,8 @@ const TextField = ({
     type,
     name,
     value,
-    onChange
+    onChange,
+    error
 }) => {
     return (
         <div className="row mb-3">
@@ -19,6 +20,7 @@ const TextField = ({
                     value = {value}
                     onChange = {onChange}
                 />
+                {error && <p>{error}</p>}
             </div>
         </div>
     );
@@ -32,7 +34,8 @@ TextField.propTupes = {
     type: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    error: PropTypes.string
 };
 
 export default TextField;
