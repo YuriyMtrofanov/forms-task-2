@@ -16,7 +16,7 @@ const CreateUserPage = () => {
         validate();
         console.log(errors);
     }, [inputData]);
-    
+
     // Создадим универсальныый валидатор. В этом методе мы зададим отображение нескольких ошибок.
     // Данный метод будет проверять требования для вводимых в поле данных. Эти настройки сохраним в
     // переменную validatorVonfig. По сути своей это объект в котором перечислены наши поля и во
@@ -32,10 +32,12 @@ const CreateUserPage = () => {
             isName: {message: "Фамилия должна состоять из кириллических символов"}
         },
         year: {
-            isRequired: {message: "Поле Год рождения обязательно для заполнения"}
+            isRequired: {message: "Поле Год рождения обязательно для заполнения"},
+            isDigits: {message: "Год рождения должен состоять из цифр"}
         },
         link: {
-            isRequired: {message: "Поле Портфолио обязательно для заполнения"}
+            isRequired: {message: "Поле Портфолио обязательно для заполнения"},
+            isLink: {message: "Данные введены некорректно"}
         }
     };
 
@@ -52,15 +54,19 @@ const CreateUserPage = () => {
         // }
         // На мы создали универсальный валидатор и теперь используем его:
         const errors = validator(inputData, validatorConfig);
-
         setErrors(errors);
-        console.log(errors);
         // Помимо записи состояния для объекта с ошибками вернем результат работы функции то есть
         // пройдена валидация или нет. Для этого пройдемся по ключам объекта с ошибками и проверим
         // длину полученного массива. Если дляна массива = 0 (валидация пройдена), то возвращаем
         // true, в противном случае возвращаем false (валидация не пройдена)
         return Object.keys(errors).length === 0
     };
+
+    // Для кнопки отправить зададим параметр disabled. Создадим переменную, которая принимает результат
+    // проверки на наличие ошибок в errors. Точно такой же как тот, что мы задаем в ф-ии validate
+    // чтобы остановить её выполнение т.е. если isDisabled возвращает true, то наша кнопка неактивна,
+    // если false - активна, следовательно нам нужно инвертировать равенство при вызове этой переменной
+    const isDisabled = Object.keys(errors).length === 0
 
     const handleChange = ({target}) => {    
         setInputData((prevState) => ({
@@ -88,7 +94,7 @@ const CreateUserPage = () => {
 
     return (
         <div>
-            <h1>Создать</h1>
+            <h1 className="mb-4">Создать</h1>
             <form onSubmit={handleSubmit}>
                 <TextField
                     label = "Имя"
@@ -126,7 +132,11 @@ const CreateUserPage = () => {
                     onChange = {handleChange}
                     error = {errors.link}
                 />
-                <button type = "submit" className="btn btn-primary"> Сохранить</button>
+                <button
+                    type = "submit"
+                    className="btn btn-primary mx-auto"
+                    disabled = {!isDisabled}
+                > Сохранить</button>
             </form>
         </div>
     );

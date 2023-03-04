@@ -17,6 +17,21 @@ export function validator(data, config){
                 if (!nameRegExp.test(data)) return config.message;
                 break;
             }
+            // Добавим проверку на правильность ввода года рождения
+            case "isDigits": {
+                const yearRegExp = /^[0-9]+$/g;
+                if (!yearRegExp.test(data)) return config.message;
+                break;
+            }
+            // case "min": {
+            //     statusValidate = data.length < config.value;
+            //     break;
+            // }
+            case "isLink": {
+                const linkRegExp = /^https?:\/\/\S+$/g;
+                if (!linkRegExp.test(data)) return config.message;
+                break;
+            }
             default:
                 break;
         }
@@ -34,9 +49,11 @@ export function validator(data, config){
         // об ошибке для данного поля из объекта с конфигурацией) и сохраним результат её
         // работы в переменную 
             const error = validate(validateMethod, data[fieldName], config[fieldName][validateMethod]);
-            // и выполним дополнительную проверку существует ли вообще ошибка
-            // а также в объекте "errors" НЕ сужествует ранее записанная ошибка errors[fieldName]
-            // то есть мы проверяем существуют ли записи об ощибках и выводим первую
+            // и выполним дополнительную проверку существует ли вообще ошибка "error"
+            // а также  НЕ сужествует ли в объекте "errors" ранее записанная ошибка (!errors[fieldName]).
+            // То есть мы проверяем существуют ли записи об ошибках и выводим первую.
+            // Другими словами ошибка добавляется в том случае если записей об ошибках не было
+            // и не добавится если ранее запись уже была сделана
             if (error && !errors[fieldName]) {
                 errors[fieldName] = error;
             }

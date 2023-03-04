@@ -9,9 +9,9 @@ const UserPage = () => {
         setUserData(() => {
             return JSON.parse(localStorage.getItem("user"));
         });
-        console.log(userData);
     }, []);
 
+    // Реализую переадресацию
     const handleClick = () => {
         if (userData){
             history.push(`/edit`);
@@ -19,6 +19,33 @@ const UserPage = () => {
             history.push(`/create`);
         };
     };
+
+    // Высчитываю полное количество лет и выдаю итоговую запись со склонением
+    const fullAge = () => {
+        const age = new Date().getFullYear() - userData.year;
+        const numberArray = age.toString().split("");
+        if (numberArray.length === 1){
+            if (Number(numberArray[0]) === 1) {
+                return `${age} год`;
+            } else if (Number(numberArray[0]) > 1 && Number(numberArray[0]) <= 4) {
+                return `${age} года`;
+            } else {
+                return `${age} лет`;
+            }
+        } else if (numberArray.length === 2 && Number(numberArray[0]) === 1){
+            return `${age} лет`;
+        } else if (numberArray.length >= 2 && numberArray.length < 3) {
+            if (Number(numberArray[1]) === 1) {
+                return `${age} год`;
+            } else if (Number(numberArray[1]) > 1 && Number(numberArray[1]) <= 4) {
+                return `${age} года`;
+            } else {
+                return `${age} лет`;
+            }
+        }
+        // return `Возраст: ${age}, ${ends}`;
+    };
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -30,7 +57,7 @@ const UserPage = () => {
                             <div>
                                 <p><b>Имя:</b> {userData.name}</p>
                                 <p><b>Фамилия:</b> {userData.surname}</p>
-                                <p><b>Год рождения:</b> {userData.year}</p>
+                                <p><b>Год рождения:</b> {userData.year}{` (${fullAge()})`}</p>
                                 <p><b>Портфолио:</b> {userData.link}</p>
                             </div>
                         )}
