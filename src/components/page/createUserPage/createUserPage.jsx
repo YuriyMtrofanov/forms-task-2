@@ -33,7 +33,8 @@ const CreateUserPage = () => {
         },
         year: {
             isRequired: {message: "Поле Год рождения обязательно для заполнения"},
-            isDigits: {message: "Год рождения должен состоять из цифр"}
+            isDigits: {message: "Год рождения должен состоять из цифр"},
+            isCorrectYear: {message: "Данные введены некорректно"}
         },
         link: {
             isRequired: {message: "Поле Портфолио обязательно для заполнения"},

@@ -23,6 +23,10 @@ export function validator(data, config){
                 if (!yearRegExp.test(data)) return config.message;
                 break;
             }
+            case "isCorrectYear": {
+                if (data > new Date().getFullYear()) return config.message;
+                break;
+            }
             // case "min": {
             //     statusValidate = data.length < config.value;
             //     break;
